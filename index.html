@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Ace — Free AI IELTS Preparation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g1:#0a3d2e;--g2:#1a6b4a;--g3:#28a372;--g4:#3dd68c;--g5:#e8faf3;
+  --surface:#fff;--bg:#f4f7f6;--border:#e2ece8;
+  --text:#0d1f18;--text2:#3d5a4f;--text3:#7a9b8e;
+  --red:#e53e3e;--amber:#d97706;--blue:#2563eb;
+  --radius:12px;--radius-lg:18px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);
+  --shadow-md:0 4px 24px rgba(0,0,0,.12);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
+
+/* ── SIDEBAR LAYOUT ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:240px;min-width:240px;background:var(--g1);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:50;padding:0}
+.main{margin-left:240px;flex:1;min-height:100vh}
+
+/* SIDEBAR */
+.sb-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo h1{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.sb-logo h1 span{color:var(--g4)}
+.sb-logo p{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;text-transform:uppercase;letter-spacing:.08em}
+.sb-section{padding:16px 12px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;margin:2px 8px;cursor:pointer;color:rgba(255,255,255,.65);font-size:14px;font-weight:500;transition:all .15s;border:none;background:none;width:calc(100% - 16px);text-align:left;font-family:'Inter',sans-serif}
+.sb-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.sb-item.active{background:var(--g3);color:#fff}
+.sb-item .icon{font-size:18px;width:20px;text-align:center}
+.sb-item .badge{margin-left:auto;background:var(--g4);color:var(--g1);font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
+.sb-bottom{margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-bottom p{font-size:12px;color:rgba(255,255,255,.4);text-align:center;line-height:1.5}
+
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40}
+.topbar-title{font-size:18px;font-weight:700;color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.band-pill{background:var(--g5);border:1px solid #b2dfc8;border-radius:20px;padding:5px 14px;font-size:13px;font-weight:600;color:var(--g2)}
+.btn-icon{background:none;border:1.5px solid var(--border);border-radius:10px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);font-family:'Inter',sans-serif;transition:all .15s}
+.btn-icon:hover{border-color:var(--g3);color:var(--g2)}
+
+/* CONTENT */
+.content{padding:32px}
+
+/* PAGES */
+.page{display:none}.page.active{display:block}
+
+/* HOME DASHBOARD */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;box-shadow:var(--shadow)}
+.stat-card .label{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.stat-card .value{font-size:36px;font-weight:800;color:var(--text);letter-spacing:-1px}
+.stat-card .sub{font-size:13px;color:var(--text3);margin-top:4px}
+.stat-card.green .value{color:var(--g2)}
+.welcome-card{background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 100%);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between}
+.welcome-card h2{font-size:24px;font-weight:800;color:#fff;margin-bottom:6px}
+.welcome-card p{font-size:14px;color:rgba(255,255,255,.7);max-width:420px;line-height:1.6}
+.welcome-card .big-score{font-size:64px;font-weight:900;color:var(--g4);letter-spacing:-2px;line-height:1}
+.quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:28px}
+.qa-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px}
+.qa-card:hover{border-color:var(--g3);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.qa-icon{width:42px;height:42px;border-radius:10px;background:var(--g5);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.qa-card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.qa-card p{font-size:12px;color:var(--text3)}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-head h2{font-size:17px;font-weight:700}
+.link-btn{font-size:13px;color:var(--g3);font-weight:600;cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.card-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+
+/* TABS inside page */
+.page-tabs{display:flex;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:24px;width:fit-content}
+.page-tab{padding:8px 20px;border-radius:9px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);background:none;font-family:'Inter',sans-serif;transition:all .15s}
+.page-tab.active{background:var(--surface);color:var(--g1);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+
+/* TASK SELECT */
+.task-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.task-opt{background:var(--bg);border:2px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;text-align:left;transition:all .15s;font-family:'Inter',sans-serif;width:100%}
+.task-opt:hover{border-color:var(--g3)}
+.task-opt.sel{border-color:var(--g2);background:var(--g5)}
+.task-opt h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
+.task-opt p{font-size:12px;color:var(--text3);line-height:1.5}
+.task-opt .chip{display:inline-block;background:#e8f4ff;color:#1d5faa;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px}
+.task-opt.sel .chip{background:#c8f0dc;color:var(--g1)}
+
+/* INPUTS */
+.input-group{margin-bottom:16px}
+.input-group label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px}
+.input-row{display:flex;gap:8px}
+input[type=text],textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--text);background:var(--surface);outline:none;transition:border .15s;line-height:1.6}
+input[type=text]:focus,textarea:focus{border-color:var(--g3);box-shadow:0 0 0 3px rgba(61,214,140,.12)}
+textarea{resize:vertical;min-height:220px}
+.wc-bar{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.wc{font-size:12px;color:var(--text3);font-weight:500}
+.wc span{color:var(--g2);font-weight:700}
+.wc-indicator{height:3px;flex:1;max-width:120px;background:var(--border);border-radius:2px;overflow:hidden;margin-left:10px}
+.wc-fill{height:100%;background:var(--g3);border-radius:2px;transition:width .3s}
+
+/* BUTTONS */
+.btn-primary{background:var(--g2);color:#fff;border:none;border-radius:10px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--g1);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-secondary{background:var(--surface);color:var(--text2);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.btn-secondary:hover{border-color:var(--g3);color:var(--g2)}
+.btn-ghost{background:none;border:none;color:var(--g3);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+
+/* INFO BOX */
+.info-box{background:var(--g5);border:1px solid #b2dfc8;border-radius:10px;padding:12px 16px;font-size:13px;color:var(--g1);line-height:1.6;margin-bottom:16px}
+.info-box strong{font-weight:700}
+.warn-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:12px 16px;font-size:13px;color:#92400e;line-height:1.6;margin-bottom:16px}
+
+/* LOADING */
+.loading-state{display:none;text-align:center;padding:40px 20px}
+.loading-state.show{display:block}
+.pulse-ring{width:60px;height:60px;border:3px solid var(--g5);border-top-color:var(--g3);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-state p{font-size:14px;color:var(--text2);font-weight:500}
+.loading-state small{font-size:12px;color:var(--text3);display:block;margin-top:4px}
+
+/* SCORE RESULT */
+.result-wrap{display:none}.result-wrap.show{display:block}
+.result-hero{background:linear-gradient(135deg,var(--g1),var(--g2));border-radius:var(--radius-lg);padding:28px;margin-bottom:20px;display:flex;align-items:center;gap:24px}
+.result-score-big{text-align:center;min-width:100px}
+.result-score-big .num{font-size:72px;font-weight:900;color:var(--g4);line-height:1;letter-spacing:-2px}
+.result-score-big .lbl{font-size:12px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.result-divider{width:1px;height:80px;background:rgba(255,255,255,.2)}
+.result-crit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;flex:1}
+.crit-box{background:rgba(255,255,255,.1);border-radius:10px;padding:12px 14px}
+.crit-box .name{font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.crit-box .score{font-size:22px;font-weight:800;color:#fff}
+.crit-bar{height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:6px;overflow:hidden}
+.crit-fill{height:100%;background:var(--g4);border-radius:2px}
+.feedback-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px}
+.fb-tab{padding:10px 18px;border:none;background:none;font-size:14px;font-weight:600;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'Inter',sans-serif;transition:all .15s}
+.fb-tab.active{color:var(--g2);border-bottom-color:var(--g2)}
+.fb-panel{display:none}.fb-panel.active{display:block}
+.feedback-item{padding:16px 0;border-bottom:1px solid var(--border)}
+.feedback-item:last-child{border-bottom:none}
+.feedback-item h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.feedback-item p{font-size:14px;color:var(--text2);line-height:1.75}
+.score-tag{display:inline-flex;align-items:center;background:var(--g5);color:var(--g2);font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;border:1px solid #b2dfc8}
+.band8-box{background:var(--g1);border-radius:var(--radius);padding:20px 22px;margin-top:16px}
+.band8-box h4{font-size:14px;font-weight:700;color:var(--g4);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.band8-box ul{list-style:none;padding:0}
+.band8-box ul li{font-size:13px;color:rgba(255,255,255,.8);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08);line-height:1.6}
+.band8-box ul li:last-child{border-bottom:none}
+.band8-box ul li::before{content:"→ ";color:var(--g4);font-weight:700}
+
+/* SPEAKING */
+.part-selector{display:flex;gap:8px;margin-bottom:20px}
+.part-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg);cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;text-align:center}
+.part-btn:hover{border-color:var(--g3)}
+.part-btn.sel{border-color:var(--g2);background:var(--g5)}
+.part-btn .num{font-size:22px;font-weight:800;color:var(--text3);display:block}
+.part-btn.sel .num{color:var(--g2)}
+.part-btn .name{font-size:12px;color:var(--text3);font-weight:500}
+.part-btn.sel .name{color:var(--g1)}
+.part-desc{background:var(--g5);border-left:3px solid var(--g3);padding:12px 16px;border-radius:0 8px 8px 0;font-size:13px;color:var(--g1);line-height:1.6;margin-bottom:20px}
+.question-card{background:var(--g5);border:1px solid #b2dfc8;border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;min-height:80px;font-size:14px;color:var(--g1);line-height:1.75}
+.question-card .placeholder{color:var(--text3);font-style:italic}
+
+/* MOCK */
+.mock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.mock-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:20px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow)}
+.mock-card:hover{border-color:var(--g3);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.mock-card .type-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+.badge-t1{background:#e8f4ff;color:#1d5faa}
+.badge-t2{background:#fef3c7;color:#92400e}
+.badge-sp{background:#fce7f3;color:#9d174d}
+.mock-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4}
+.mock-card p{font-size:13px;color:var(--text3);margin-bottom:12px}
+.mock-card .meta{display:flex;gap:8px;flex-wrap:wrap}
+.meta-tag{font-size:11px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 10px;font-weight:500}
+.exam-header{background:var(--g1);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.exam-header h3{font-size:16px;font-weight:700;color:#fff}
+.exam-header p{font-size:13px;color:rgba(255,255,255,.6);margin-top:2px}
+.timer{font-size:28px;font-weight:800;color:var(--g4);font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.timer.warning{color:#fbbf24}
+.timer.danger{color:#f87171}
+
+/* TIPS */
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:28px}
+.tip-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow)}
+.tip-card .tip-icon{font-size:24px;margin-bottom:10px}
+.tip-card h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px}
+.tip-card p{font-size:13px;color:var(--text2);line-height:1.7}
+.tip-card .example{background:var(--bg);border-left:3px solid var(--g3);padding:8px 12px;border-radius:0 6px 6px 0;margin-top:10px;font-size:12px;color:var(--text2);line-height:1.6}
+.tip-card .example strong{color:var(--g2)}
+.accordion{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.acc-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;cursor:pointer;background:var(--surface);font-size:14px;font-weight:600;color:var(--text)}
+.acc-head:hover{background:var(--bg)}
+.acc-body{display:none;padding:0 18px 16px;background:var(--surface);font-size:14px;color:var(--text2);line-height:1.75}
+.acc-body.open{display:block}
+.chevron{transition:transform .2s;color:var(--text3);font-size:18px}
+.chevron.open{transform:rotate(180deg)}
+
+/* VOCAB BUILDER */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px}
+.vocab-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;cursor:pointer;transition:all .15s}
+.vocab-card:hover{border-color:var(--g3);background:var(--g5)}
+.vocab-card .word{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px}
+.vocab-card .type{font-size:10px;color:var(--text3);text-transform:uppercase;font-weight:600;margin-bottom:4px}
+.vocab-card .def{font-size:12px;color:var(--text2);line-height:1.4}
+
+/* ESSAY REWRITER */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.compare-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.compare-box h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.compare-box.original h4{color:var(--red)}
+.compare-box.improved h4{color:var(--g2)}
+.compare-box p{font-size:13px;color:var(--text2);line-height:1.8}
+
+/* PROGRESS BAR */
+.prog-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:8px}
+.prog-fill{height:100%;border-radius:3px;transition:width .5s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{width:200px;min-width:200px}
+  .main{margin-left:200px}
+}
+@media(max-width:700px){
+  .sidebar{transform:translateX(-100%)}
+  .main{margin-left:0}
+  .content{padding:20px 16px}
+  .result-hero{flex-direction:column}
+  .result-crit-grid{grid-template-columns:repeat(2,1fr)}
+  .compare-grid{grid-template-columns:1fr}
+  .task-grid{grid-template-columns:1fr}
+  .mock-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <h1>IELTS <span>Ace</span></h1>
+    <p>AI-Powered · Free Forever</p>
+  </div>
+  <div class="sb-section">Practice</div>
+  <button class="sb-item active" onclick="nav('home')"><span class="icon">🏠</span> Dashboard</button>
+  <button class="sb-item" onclick="nav('writing')"><span class="icon">✏️</span> Writing Grader</button>
+  <button class="sb-item" onclick="nav('speaking')"><span class="icon">🎤</span> Speaking Coach</button>
+  <button class="sb-item" onclick="nav('mock')"><span class="icon">📋</span> Mock Tests <span class="badge">6</span></button>
+  <button class="sb-item" onclick="nav('rewriter')"><span class="icon">✨</span> Essay Rewriter</button>
+  <div class="sb-section">Learn</div>
+  <button class="sb-item" onclick="nav('vocab')"><span class="icon">📚</span> Vocab Builder</button>
+  <button class="sb-item" onclick="nav('tips')"><span class="icon">🎯</span> Band 8 Strategies</button>
+  <button class="sb-item" onclick="nav('tutor')"><span class="icon">🤖</span> AI Tutor</button>
+  <div class="sb-bottom">
+    <p>Built free for students who refuse to pay.<br>Share with your classmates 🎓</p>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-title" id="topbar-title">Dashboard</div>
+  <div class="topbar-right">
+    <div class="band-pill" id="current-band">🎯 Target: Band 8</div>
+    <button class="btn-icon" onclick="nav('tutor')">💬 Ask AI Tutor</button>
+  </div>
+</div>
+
+<!-- ── CONTENT AREA ── -->
+<div class="content">
+
+<!-- ═══════════ HOME ═══════════ -->
+<div id="page-home" class="page active">
+  <div class="welcome-card">
+    <div>
+      <h2>Welcome back. Let's hit Band 8.</h2>
+      <p>Practice your Writing and Speaking every day. Get real AI feedback based on official IELTS criteria — completely free.</p>
+      <div style="margin-top:16px;display:flex;gap:10px">
+        <button class="btn-primary" onclick="nav('writing')">Start Writing Practice →</button>
+        <button class="btn-secondary" style="color:#fff;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1)" onclick="nav('mock')">Take a Mock Test</button>
+      </div>
+    </div>
+    <div class="big-score">8.0</div>
+  </div>
+  <div class="section-head"><h2>Quick Actions</h2></div>
+  <div class="quick-actions">
+    <div class="qa-card" onclick="nav('writing')">
+      <div class="qa-icon">✏️</div>
+      <div><h3>Grade my essay</h3><p>Task 1 or Task 2</p></div>
+    </div>
+    <div class="qa-card" onclick="nav('speaking')">
+      <div class="qa-icon">🎤</div>
+      <div><h3>Speaking practice</h3><p>All 3 parts</p></div>
+    </div>
+    <div class="qa-card" onclick="nav('mock')">
+      <div class="qa-icon">📋</div>
+      <div><h3>Mock test</h3><p>Timed exam simulation</p></div>
+    </div>
+    <div class="qa-card" onclick="nav('rewriter')">
+      <div class="qa-icon">✨</div>
+      <div><h3>Rewrite my essay</h3><p>Upgrade to Band 8</p></div>
+    </div>
+    <div class="qa-card" onclick="nav('vocab')">
+      <div class="qa-icon">📚</div>
+      <div><h3>Vocab builder</h3><p>Academic word lists</p></div>
+    </div>
+    <div class="qa-card" onclick="nav('tutor')">
+      <div class="qa-icon">🤖</div>
+      <div><h3>Ask AI Tutor</h3><p>Any IELTS question</p></div>
+    </div>
+  </div>
+  <div class="section-head"><h2>What makes Band 8?</h2></div>
+  <div class="dash-grid">
+    <div class="stat-card green"><div class="label">Task Response</div><div class="value">TR</div><div class="sub">Fully addresses all parts of the question with well-developed ideas</div></div>
+    <div class="stat-card green"><div class="label">Coherence & Cohesion</div><div class="value">CC</div><div class="sub">Information flows logically with seamless use of cohesive devices</div></div>
+    <div class="stat-card green"><div class="label">Lexical Resource</div><div class="value">LR</div><div class="sub">Wide range of vocabulary used with precision and natural collocations</div></div>
+    <div class="stat-card green"><div class="label">Grammatical Range</div><div class="value">GRA</div><div class="sub">Mix of complex structures with only occasional minor errors</div></div>
+  </div>
+</div>
+
+<!-- ═══════════ WRITING ═══════════ -->
+<div id="page-writing" class="page">
+  <div class="page-tabs">
+    <button class="page-tab active" onclick="setWritingTab('grade',this)">✅ Grade Essay</button>
+    <button class="page-tab" onclick="setWritingTab('practice',this)">🎲 Practice Mode</button>
+    <button class="page-tab" onclick="setWritingTab('samples',this)">📄 Sample Answers</button>
+  </div>
+
+  <!-- GRADE TAB -->
+  <div id="wt-grade" class="wt-panel">
+    <div class="card">
+      <div class="card-label">Select task type</div>
+      <div class="task-grid">
+        <button class="task-opt sel" id="w-t1" onclick="selectTask(1)">
+          <div class="chip">TASK 1</div>
+          <h3>📊 Graph / Chart / Map</h3>
+          <p>Describe and compare data from a visual. Academic or General Training letter.</p>
+          <p style="margin-top:6px;font-size:11px;color:var(--text3)">Minimum 150 words · 20 minutes</p>
+        </button>
+        <button class="task-opt" id="w-t2" onclick="selectTask(2)">
+          <div class="chip">TASK 2</div>
+          <h3>📝 Essay / Argument</h3>
+          <p>Opinion, Discussion, Problem-Solution, or Advantages-Disadvantages essay.</p>
+          <p style="margin-top:6px;font-size:11px;color:var(--text3)">Minimum 250 words · 40 minutes</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Question / Prompt</div>
+      <div class="input-row" style="margin-bottom:0">
+        <input type="text" id="w-topic" placeholder="Paste your IELTS exam question here, or click Generate Sample →" style="flex:1"/>
+        <button class="btn-secondary" onclick="genWritingTopic()" style="white-space:nowrap">🔄 Generate</button>
+      </div>
+      <div id="w-topic-load" class="loading-state"><div class="pulse-ring"></div><p>Generating an authentic IELTS question...</p></div>
+      <div id="w-topic-type" class="info-box" style="display:none;margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="card-label" style="margin-bottom:0">Your Response</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-ghost" onclick="clearWriting()">Clear</button>
+        </div>
+      </div>
+      <textarea id="w-essay" placeholder="Write your full response here. Take your time — write as if it's the real exam." oninput="updateWWC()"></textarea>
+      <div class="wc-bar">
+        <div class="wc">Words: <span id="w-wc">0</span> / <span id="w-target">250</span> minimum</div>
+        <div class="wc-indicator"><div class="wc-fill" id="w-wc-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-primary" id="w-grade-btn" onclick="gradeWriting()">✅ Grade My Essay</button>
+      <button class="btn-secondary" onclick="getWritingSample()">👁 Band 8 Sample</button>
+      <button class="btn-secondary" onclick="analyseTask()">🔍 Analyse Question</button>
+    </div>
+
+    <div id="w-result" class="result-wrap">
+      <div id="w-loading" class="loading-state"><div class="pulse-ring"></div><p>Grading with official IELTS band descriptors...</p><small>Analysing all 4 criteria · Usually takes 10-15 seconds</small></div>
+      <div id="w-score-content" style="display:none">
+        <div class="card" style="padding:0;overflow:hidden">
+          <div class="result-hero">
+            <div class="result-score-big">
+              <div class="num" id="w-overall-num">—</div>
+              <div class="lbl">Overall Band</div>
+            </div>
+            <div class="result-divider"></div>
+            <div class="result-crit-grid">
+              <div class="crit-box">
+                <div class="name">Task Response</div>
+                <div class="score" id="w-s-tr">—</div>
+                <div class="crit-bar"><div class="crit-fill" id="w-b-tr" style="width:0%"></div></div>
+              </div>
+              <div class="crit-box">
+                <div class="name">Coherence</div>
+                <div class="score" id="w-s-cc">—</div>
+                <div class="crit-bar"><div class="crit-fill" id="w-b-cc" style="width:0%"></div></div>
+              </div>
+              <div class="crit-box">
+                <div class="name">Lexical Resource</div>
+                <div class="score" id="w-s-lr">—</div>
+                <div class="crit-bar"><div class="crit-fill" id="w-b-lr" style="width:0%"></div></div>
+              </div>
+              <div class="crit-box">
+                <div class="name">Grammar</div>
+                <div class="score" id="w-s-gr">—</div>
+                <div class="crit-bar"><div class="crit-fill" id="w-b-gr" style="width:0%"></div></div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:24px">
+            <div class="feedback-tabs">
+              <button class="fb-tab active" onclick="setFbTab('w','detail',this)">Detailed Feedback</button>
+              <button class="fb-tab" onclick="setFbTab('w','band8',this)">🎯 How to Reach Band 8</button>
+              <button class="fb-tab" onclick="setFbTab('w','errors',this)">⚠️ Key Errors</button>
+            </div>
+            <div id="w-fb-detail" class="fb-panel active">
+              <div id="w-feedback-content"></div>
+            </div>
+            <div id="w-fb-band8" class="fb-panel">
+              <div id="w-band8-content"></div>
+            </div>
+            <div id="w-fb-errors" class="fb-panel">
+              <div id="w-errors-content"></div>
+            </div>
+          </div>
+        </div>
+        <div class="action-row" style="margin-top:0">
+          <button class="btn-primary" onclick="nav('rewriter')">✨ Rewrite to Band 8</button>
+          <button class="btn-secondary" onclick="clearWriting()">Try Another Essay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE TAB -->
+  <div id="wt-practice" class="wt-panel" style="display:none">
+    <div class="card">
+      <div class="card-label">Timed Practice Session</div>
+      <div class="info-box">Select a task type, generate a question, and practice under exam conditions. The timer starts when you begin writing.</div>
+      <div class="task-grid" style="margin-bottom:20px">
+        <button class="task-opt sel" id="p-t1" onclick="selectPracticeTask(1)">
+          <div class="chip">TASK 1</div>
+          <h3>Graph / Chart</h3>
+          <p>20 minute timer</p>
+        </button>
+        <button class="task-opt" id="p-t2" onclick="selectPracticeTask(2)">
+          <div class="chip">TASK 2</div>
+          <h3>Essay</h3>
+          <p>40 minute timer</p>
+        </button>
+      </div>
+      <button class="btn-primary" onclick="startPractice()" style="width:100%;justify-content:center">🚀 Generate Question & Start Timer</button>
+    </div>
+    <div id="practice-active" style="display:none">
+      <div class="exam-header">
+        <div>
+          <h3 id="practice-type-label">IELTS Writing Task 1</h3>
+          <p id="practice-question-text"></p>
+        </div>
+        <div class="timer" id="practice-timer">20:00</div>
+      </div>
+      <div class="card">
+        <textarea id="practice-essay" placeholder="Write your answer here..." oninput="updatePracticeWC()"></textarea>
+        <div class="wc-bar">
+          <div class="wc">Words: <span id="p-wc">0</span></div>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="btn-primary" onclick="submitPractice()">📤 Submit & Grade</button>
+        <button class="btn-secondary" onclick="endPractice()">End Practice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAMPLES TAB -->
+  <div id="wt-samples" class="wt-panel" style="display:none">
+    <div class="card">
+      <div class="card-label">Band 8 & 9 Sample Answers</div>
+      <div class="info-box">Choose a question type to see a high-scoring sample answer with examiner commentary.</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+        <button class="task-opt" onclick="loadSample('opinion')"><h3>Opinion Essay</h3><p>Discuss both views + your opinion</p></button>
+        <button class="task-opt" onclick="loadSample('problem')"><h3>Problem/Solution</h3><p>Causes and measures</p></button>
+        <button class="task-opt" onclick="loadSample('adv')"><h3>Advantages/Disadvantages</h3><p>Balanced analysis</p></button>
+        <button class="task-opt" onclick="loadSample('barchart')"><h3>Bar Chart (Task 1)</h3><p>Comparison of data</p></button>
+        <button class="task-opt" onclick="loadSample('linegraph')"><h3>Line Graph (Task 1)</h3><p>Trends over time</p></button>
+        <button class="task-opt" onclick="loadSample('process')"><h3>Process Diagram (Task 1)</h3><p>Describing a process</p></button>
+      </div>
+      <div id="sample-loading" class="loading-state"><div class="pulse-ring"></div><p>Generating band 8 sample answer...</p></div>
+      <div id="sample-content" style="margin-top:20px;display:none">
+        <div class="card" style="background:var(--g5);border-color:#b2dfc8">
+          <div class="card-label" style="color:var(--g2)">Band 8 Sample Answer</div>
+          <div id="sample-question" style="font-size:13px;color:var(--text2);margin-bottom:14px;padding:10px;background:var(--surface);border-radius:8px"></div>
+          <div id="sample-text" style="font-size:14px;color:var(--text);line-height:1.85;white-space:pre-wrap"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Examiner Commentary</div>
+          <div id="sample-commentary" style="font-size:14px;color:var(--text2);line-height:1.75"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SPEAKING ═══════════ -->
+<div id="page-speaking" class="page">
+  <div class="card">
+    <div class="card-label">Select IELTS Speaking Part</div>
+    <div class="part-selector">
+      <button class="part-btn sel" id="sp-p1" onclick="selectPart(1,this)"><span class="num">1</span><span class="name">Introduction</span></button>
+      <button class="part-btn" id="sp-p2" onclick="selectPart(2,this)"><span class="num">2</span><span class="name">Cue Card</span></button>
+      <button class="part-btn" id="sp-p3" onclick="selectPart(3,this)"><span class="num">3</span><span class="name">Discussion</span></button>
+    </div>
+    <div id="sp-desc" class="part-desc">Part 1 — The examiner asks personal questions about familiar topics like home, family, studies, hobbies. Give natural, extended answers of 2-4 sentences. Avoid one-word or one-sentence responses.</div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div class="card-label" style="margin-bottom:0">Speaking Question</div>
+      <button class="btn-secondary" onclick="genSpeakingQ()">🔄 New Question</button>
+    </div>
+    <div id="sp-q-loading" class="loading-state"><div class="pulse-ring"></div><p>Generating speaking question...</p></div>
+    <div id="sp-question" class="question-card"><span class="placeholder">Click "New Question" to get a speaking prompt for this part.</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Your Answer <span style="font-weight:400;color:var(--text3)">(type what you would say to the examiner)</span></div>
+    <textarea id="sp-answer" placeholder="Write your spoken answer naturally, as you would say it in the exam room. Use natural connectors, show your range of vocabulary, and give extended responses..." oninput="updateSPWC()"></textarea>
+    <div class="wc-bar">
+      <div class="wc">Words: <span id="sp-wc">0</span></div>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-primary" onclick="gradeSpeaking()">✅ Get AI Feedback</button>
+    <button class="btn-secondary" onclick="getSpeakingSample()">👁 Band 8 Sample Answer</button>
+    <button class="btn-secondary" onclick="getSpeakingTips()">💡 Part Tips</button>
+  </div>
+
+  <div id="sp-result" class="result-wrap">
+    <div id="sp-loading" class="loading-state"><div class="pulse-ring"></div><p>Evaluating your speaking response...</p><small>Analysing fluency, vocabulary, grammar & pronunciation</small></div>
+    <div id="sp-score-content" style="display:none">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="result-hero">
+          <div class="result-score-big">
+            <div class="num" id="sp-overall-num">—</div>
+            <div class="lbl">Overall Band</div>
+          </div>
+          <div class="result-divider"></div>
+          <div class="result-crit-grid">
+            <div class="crit-box"><div class="name">Fluency & Coherence</div><div class="score" id="sp-s-fc">—</div><div class="crit-bar"><div class="crit-fill" id="sp-b-fc" style="width:0%"></div></div></div>
+            <div class="crit-box"><div class="name">Lexical Resource</div><div class="score" id="sp-s-lr">—</div><div class="crit-bar"><div class="crit-fill" id="sp-b-lr" style="width:0%"></div></div></div>
+            <div class="crit-box"><div class="name">Grammatical Range</div><div class="score" id="sp-s-gr">—</div><div class="crit-bar"><div class="crit-fill" id="sp-b-gr" style="width:0%"></div></div></div>
+            <div class="crit-box"><div class="name">Pronunciation</div><div class="score" id="sp-s-pr">—</div><div class="crit-bar"><div class="crit-fill" id="sp-b-pr" style="width:0%"></div></div></div>
+          </div>
+        </div>
+        <div style="padding:24px">
+          <div class="feedback-tabs">
+            <button class="fb-tab active" onclick="setFbTab('sp','detail',this)">Detailed Feedback</button>
+            <button class="fb-tab" onclick="setFbTab('sp','band8',this)">🎯 How to Reach Band 8</button>
+          </div>
+          <div id="sp-fb-detail" class="fb-panel active"><div id="sp-feedback-content"></div></div>
+          <div id="sp-fb-band8" class="fb-panel"><div id="sp-band8-content"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MOCK TESTS ═══════════ -->
+<div id="page-mock" class="page">
+  <div id="mock-browse">
+    <div class="info-box"><strong>Exam Simulation</strong> — Write under timed conditions. Results are graded using official IELTS band descriptors. Treat each mock like the real exam.</div>
+    <div class="mock-grid">
+      <div class="mock-card" onclick="startMock('Task 2 · Discussion Essay','Some people think that the best way to increase road safety is to increase the minimum legal age for driving cars or motorbikes. To what extent do you agree or disagree?','t2','40 min · 250+ words')">
+        <div class="type-badge badge-t2">Writing Task 2</div>
+        <h3>Road Safety & Driving Age</h3>
+        <p>Agree/Disagree Essay — express and justify your position clearly</p>
+        <div class="meta"><span class="meta-tag">Opinion Essay</span><span class="meta-tag">40 min</span><span class="meta-tag">250+ words</span></div>
+      </div>
+      <div class="mock-card" onclick="startMock('Task 1 · Bar Chart','The bar chart below shows the percentage of adults in four countries who used the internet daily in 2010, 2015, and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.','t1','20 min · 150+ words')">
+        <div class="type-badge badge-t1">Writing Task 1</div>
+        <h3>Internet Usage Bar Chart</h3>
+        <p>Compare data across three time periods and four countries</p>
+        <div class="meta"><span class="meta-tag">Bar Chart</span><span class="meta-tag">20 min</span><span class="meta-tag">150+ words</span></div>
+      </div>
+      <div class="mock-card" onclick="startMock('Task 2 · Problem-Solution Essay','In many cities, the quality of air has decreased significantly due to the increase in the number of vehicles. What are the causes of this problem and what measures can governments and individuals take to solve it?','t2','40 min · 250+ words')">
+        <div class="type-badge badge-t2">Writing Task 2</div>
+        <h3>Air Quality & Urban Pollution</h3>
+        <p>Identify causes and propose realistic solutions</p>
+        <div class="meta"><span class="meta-tag">Problem/Solution</span><span class="meta-tag">40 min</span><span class="meta-tag">250+ words</span></div>
+      </div>
+      <div class="mock-card" onclick="startMock('Task 1 · Line Graph','The line graph below shows changes in the birth rates for three countries between 1970 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.','t1','20 min · 150+ words')">
+        <div class="type-badge badge-t1">Writing Task 1</div>
+        <h3>Birth Rate Line Graph</h3>
+        <p>Describe trends and comparisons across three countries</p>
+        <div class="meta"><span class="meta-tag">Line Graph</span><span class="meta-tag">20 min</span><span class="meta-tag">150+ words</span></div>
+      </div>
+      <div class="mock-card" onclick="startMock('Task 2 · Advantages & Disadvantages Essay','Many young people today leave their home country to study abroad. What are the advantages and disadvantages of studying in a foreign country?','t2','40 min · 250+ words')">
+        <div class="type-badge badge-t2">Writing Task 2</div>
+        <h3>Studying Abroad</h3>
+        <p>Balanced discussion of both sides with personal position</p>
+        <div class="meta"><span class="meta-tag">Adv/Disadv</span><span class="meta-tag">40 min</span><span class="meta-tag">250+ words</span></div>
+      </div>
+      <div class="mock-card" onclick="startMock('Task 2 · Two-Part Question','Some people say that the best way to improve public health is to increase the number of sports facilities. Others, however, say that this would have little effect on public health and that other measures are required. Discuss both views and give your own opinion.','t2','40 min · 250+ words')">
+        <div class="type-badge badge-t2">Writing Task 2</div>
+        <h3>Public Health & Sports Facilities</h3>
+        <p>Discuss both views and give a clear personal opinion</p>
+        <div class="meta"><span class="meta-tag">Both Views</span><span class="meta-tag">40 min</span><span class="meta-tag">250+ words</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="mock-exam" style="display:none">
+    <div class="exam-header">
+      <div>
+        <h3 id="mock-type-label">IELTS Writing Mock Exam</h3>
+        <p id="mock-q-preview" style="max-width:500px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></p>
+      </div>
+      <div>
+        <div class="timer" id="mock-timer">40:00</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);text-align:center;margin-top:2px">remaining</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Exam Question</div>
+      <div class="question-card" id="mock-question-full" style="margin-bottom:16px"></div>
+      <textarea id="mock-essay" placeholder="Begin writing your response here. Take it seriously — this is exam simulation." oninput="updateMockWC()" style="min-height:280px"></textarea>
+      <div class="wc-bar">
+        <div class="wc">Words: <span id="mock-wc">0</span> / <span id="mock-min">250</span> minimum</div>
+        <div class="wc-indicator"><div class="wc-fill" id="mock-wc-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="action-row">
+      <button class="btn-primary" onclick="submitMock()">📤 Submit Exam</button>
+      <button class="btn-secondary" onclick="exitMock()">← Back to Tests</button>
+    </div>
+    <div id="mock-result" class="result-wrap">
+      <div id="mock-loading" class="loading-state"><div class="pulse-ring"></div><p>Grading your exam response...</p><small>Comparing against official IELTS band descriptors</small></div>
+      <div id="mock-score-content" style="display:none">
+        <div class="card" style="padding:0;overflow:hidden">
+          <div class="result-hero">
+            <div class="result-score-big"><div class="num" id="mock-overall-num">—</div><div class="lbl">Exam Score</div></div>
+            <div class="result-divider"></div>
+            <div class="result-crit-grid">
+              <div class="crit-box"><div class="name">Task</div><div class="score" id="mock-s-tr">—</div><div class="crit-bar"><div class="crit-fill" id="mock-b-tr" style="width:0%"></div></div></div>
+              <div class="crit-box"><div class="name">Coherence</div><div class="score" id="mock-s-cc">—</div><div class="crit-bar"><div class="crit-fill" id="mock-b-cc" style="width:0%"></div></div></div>
+              <div class="crit-box"><div class="name">Lexical</div><div class="score" id="mock-s-lr">—</div><div class="crit-bar"><div class="crit-fill" id="mock-b-lr" style="width:0%"></div></div></div>
+              <div class="crit-box"><div class="name">Grammar</div><div class="score" id="mock-s-gr">—</div><div class="crit-bar"><div class="crit-fill" id="mock-b-gr" style="width:0%"></div></div></div>
+            </div>
+          </div>
+          <div style="padding:24px">
+            <div id="mock-feedback-content"></div>
+            <div id="mock-band8-content"></div>
+          </div>
+        </div>
+        <div class="action-row"><button class="btn-primary" onclick="exitMock()">← Try Another Test</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ESSAY REWRITER ═══════════ -->
+<div id="page-rewriter" class="page">
+  <div class="info-box"><strong>Essay Rewriter</strong> — Paste your essay below and the AI will upgrade it to Band 8 level, keeping your ideas but enhancing vocabulary, grammar, and structure. You'll see a side-by-side comparison.</div>
+  <div class="card">
+    <div class="card-label">Your Original Essay</div>
+    <textarea id="rw-input" placeholder="Paste your essay here..." style="min-height:200px"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-label">Target Band (optional)</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="task-opt sel" id="rw-b7" onclick="setRwBand('7',this)" style="flex:1;min-width:100px;padding:10px"><h3>Band 7</h3><p>Solid improvement</p></button>
+      <button class="task-opt" id="rw-b8" onclick="setRwBand('8',this)" style="flex:1;min-width:100px;padding:10px"><h3>Band 8</h3><p>Near-native level</p></button>
+      <button class="task-opt" id="rw-b9" onclick="setRwBand('9',this)" style="flex:1;min-width:100px;padding:10px"><h3>Band 9</h3><p>Expert/native level</p></button>
+    </div>
+  </div>
+  <div class="action-row">
+    <button class="btn-primary" onclick="rewriteEssay()">✨ Rewrite My Essay</button>
+  </div>
+  <div id="rw-loading" class="loading-state"><div class="pulse-ring"></div><p>Rewriting to Band 8 level...</p><small>Enhancing vocabulary, grammar, and structure</small></div>
+  <div id="rw-result" style="display:none">
+    <div class="compare-grid">
+      <div class="compare-box original">
+        <h4>⚠️ Your Original</h4>
+        <p id="rw-orig-text"></p>
+      </div>
+      <div class="compare-box improved">
+        <h4>✅ Band <span id="rw-band-label">8</span> Version</h4>
+        <p id="rw-new-text"></p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-label">What Changed & Why</div>
+      <div id="rw-changes" style="font-size:14px;color:var(--text2);line-height:1.8"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ VOCAB BUILDER ═══════════ -->
+<div id="page-vocab" class="page">
+  <div class="info-box">Build your academic vocabulary for IELTS Writing and Speaking. Click any word to see usage examples and collocations.</div>
+  <div class="page-tabs">
+    <button class="page-tab active" onclick="setVocabCat('environment',this)">🌿 Environment</button>
+    <button class="page-tab" onclick="setVocabCat('technology',this)">💻 Technology</button>
+    <button class="page-tab" onclick="setVocabCat('society',this)">🏛️ Society</button>
+    <button class="page-tab" onclick="setVocabCat('education',this)">🎓 Education</button>
+    <button class="page-tab" onclick="setVocabCat('health',this)">❤️ Health</button>
+  </div>
+  <div id="vocab-load" class="loading-state"><div class="pulse-ring"></div><p>Loading vocabulary...</p></div>
+  <div id="vocab-grid" class="vocab-grid"></div>
+  <div id="vocab-detail" style="display:none">
+    <div class="card" style="margin-top:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="card-label" style="margin-bottom:0" id="vd-word"></div>
+        <button class="btn-ghost" onclick="document.getElementById('vocab-detail').style.display='none'">✕ Close</button>
+      </div>
+      <div id="vd-content" style="font-size:14px;color:var(--text2);line-height:1.8"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TIPS ═══════════ -->
+<div id="page-tips" class="page">
+  <div class="page-tabs">
+    <button class="page-tab active" onclick="setTipsTab('writing',this)">✏️ Writing</button>
+    <button class="page-tab" onclick="setTipsTab('speaking',this)">🎤 Speaking</button>
+    <button class="page-tab" onclick="setTipsTab('structure',this)">🏗️ Essay Structure</button>
+  </div>
+  <div id="tips-writing">
+    <div class="tips-grid">
+      <div class="tip-card"><div class="tip-icon">🎯</div><h3>Address ALL parts of the question</h3><p>Band 8 Task Response requires fully addressing every element. "Discuss both views AND give your opinion" means three distinct tasks. Missing any one caps you at Band 5 regardless of writing quality.</p></div>
+      <div class="tip-card"><div class="tip-icon">📐</div><h3>Complex sentence variety</h3><p>Mix conditionals, relative clauses, nominalisations, and passive constructions. Never start multiple sentences the same way.</p><div class="example">❌ "This is important. This helps society."<br><strong>✅ "Such developments, whilst beneficial in isolation, can fundamentally reshape..."</strong></div></div>
+      <div class="tip-card"><div class="tip-icon">📖</div><h3>Paraphrase vocabulary constantly</h3><p>Each content word should appear at most twice in your entire essay. Build synonym networks before the exam.</p><div class="example">important → <strong>crucial, significant, vital, paramount, fundamental</strong><br>increase → <strong>surge, escalate, soar, rise sharply, climb</strong></div></div>
+      <div class="tip-card"><div class="tip-icon">🔗</div><h3>Vary cohesive devices</h3><p>Avoid repeating the same linkers. Examiners notice "firstly, secondly, thirdly" used mechanically.</p><div class="example"><strong>Addition:</strong> Furthermore · Moreover · In addition<br><strong>Contrast:</strong> Nevertheless · Conversely · Notwithstanding<br><strong>Result:</strong> Consequently · As a result · This, in turn,</div></div>
+      <div class="tip-card"><div class="tip-icon">📏</div><h3>Word count discipline</h3><p>Task 1: 160-190 words. Task 2: 270-290 words. Under the minimum is penalised. Over 350 wastes time and risks errors. Count before submitting.</p></div>
+      <div class="tip-card"><div class="tip-icon">🗺️</div><h3>Task 1: Always write an Overview</h3><p>The overview (2-3 sentences on the most striking overall trend) is mandatory for Band 6+. Place it as your second paragraph. Never describe every data point — identify the pattern.</p><div class="example"><strong>✅ "Overall, internet usage rose consistently across all four countries, with Country A showing the most dramatic increase."</strong></div></div>
+    </div>
+    <div style="margin-top:8px">
+      <div class="accordion"><div class="acc-head" onclick="toggleAcc(this)">📋 Task 2 Essay Structures <span class="chevron">▾</span></div><div class="acc-body"><p><strong>Opinion Essay:</strong> Intro (paraphrase + thesis) → Body 1 (main argument) → Body 2 (counterargument + refutation) → Conclusion<br><br><strong>Discussion Essay:</strong> Intro → Body 1 (View A + evidence) → Body 2 (View B + evidence) → Conclusion (balanced + your view)<br><br><strong>Problem/Solution:</strong> Intro → Body 1 (causes/problems) → Body 2 (solutions) → Conclusion<br><br><strong>Advantages/Disadvantages:</strong> Intro → Body 1 (advantages) → Body 2 (disadvantages) → Conclusion (overall judgment)</p></div></div>
+      <div class="accordion"><div class="acc-head" onclick="toggleAcc(this)">📊 Task 1 Language Bank <span class="chevron">▾</span></div><div class="acc-body"><p><strong>Upward trends:</strong> rose sharply, increased significantly, surged, climbed, escalated<br><br><strong>Downward trends:</strong> fell dramatically, plummeted, declined, decreased substantially, dropped<br><br><strong>Stable/Flat:</strong> remained relatively stable, levelled off, plateaued, showed little change<br><br><strong>Comparisons:</strong> By contrast, In comparison, While X increased, Y fell..., Conversely<br><br><strong>Approximation:</strong> approximately, roughly, just over/under, around, nearly</p></div></div>
+    </div>
+  </div>
+  <div id="tips-speaking" style="display:none">
+    <div class="tips-grid">
+      <div class="tip-card"><div class="tip-icon">🗣️</div><h3>Never give one-sentence answers</h3><p>In Part 1, give 3-4 sentences. In Part 3, develop your idea, give evidence, then speculate. Examiners need to hear you sustain language use.</p><div class="example"><strong>Q:</strong> Do you like cooking?<br>❌ "Yes, I do."<br><strong>✅ "Absolutely — I find cooking genuinely therapeutic. There's something deeply satisfying about creating a meal from scratch, especially when I experiment with dishes from other cultures. Lately I've been trying to master Japanese cuisine, which is far more technical than I expected."</strong></div></div>
+      <div class="tip-card"><div class="tip-icon">⏸️</div><h3>Use natural fillers, not silence</h3><p>Silent pauses hurt fluency. Natural thinking fillers sound fluent and buy thinking time.</p><div class="example"><strong>Good fillers:</strong><br>"That's an interesting question — let me think..."<br>"To be honest, I'd have to say..."<br>"I've never really thought about it, but I suppose..."<br>"Well, it depends really..."</div></div>
+      <div class="tip-card"><div class="tip-icon">🎨</div><h3>Use idiomatic language</h3><p>Natural idioms and fixed phrases demonstrate lexical resource. Use them when they arise naturally — not forced.</p><div class="example"><strong>Useful phrases:</strong><br>"It goes without saying that..."<br>"I'm in two minds about..."<br>"On balance, I'd have to say..."<br>"All things considered..."<br>"The pros clearly outweigh the cons..."</div></div>
+      <div class="tip-card"><div class="tip-icon">🔮</div><h3>Speculate in Part 3</h3><p>Part 3 rewards abstract thinking. Use hypothetical and speculative language.</p><div class="example"><strong>Speculation phrases:</strong><br>"It's conceivable that..."<br>"I would imagine that..."<br>"There's a strong argument to be made..."<br>"If I had to speculate, I'd say..."<br>"One could argue that..."</div></div>
+      <div class="tip-card"><div class="tip-icon">🔄</div><h3>Self-correct naturally</h3><p>Occasional self-correction is actually a Band 8 feature — it shows awareness and control. Don't panic over small slips. Just correct and continue confidently.</p></div>
+      <div class="tip-card"><div class="tip-icon">🏗️</div><h3>Structure Part 2 clearly</h3><p>You have 1 minute to prepare. Use the bullet points as a guide, but develop each into 2-3 sentences. End with how you feel about it. Speak for the full 2 minutes.</p></div>
+    </div>
+  </div>
+  <div id="tips-structure" style="display:none">
+    <div class="card">
+      <div class="card-label">IELTS Writing Task 2 — Paragraph-by-Paragraph Guide</div>
+      <div class="accordion"><div class="acc-head" onclick="toggleAcc(this)">📝 Introduction (2-3 sentences) <span class="chevron">▾</span></div><div class="acc-body"><p><strong>Sentence 1:</strong> Paraphrase the question topic (never copy words directly)<br><strong>Sentence 2:</strong> State the essay type and your position (for opinion essays) or what you will cover<br><br><strong>Band 8 intro example (Opinion Essay):</strong><br><em>"The question of whether the internet has had a predominantly positive or negative impact on society continues to divide opinion. While some argue its benefits far outweigh its drawbacks, I firmly believe that the advantages of widespread connectivity are substantially greater than the associated risks."</em></p></div></div>
+      <div class="accordion"><div class="acc-head" onclick="toggleAcc(this)">📝 Body Paragraph 1 (5-7 sentences) <span class="chevron">▾</span></div><div class="acc-body"><p><strong>Formula:</strong> Topic sentence → Explanation → Example/Evidence → Impact → Link back<br><br><strong>Topic sentence:</strong> Introduce one clear main point<br><strong>Explanation:</strong> Develop the idea — why/how<br><strong>Example:</strong> Specific, concrete example (can be hypothetical)<br><strong>Impact:</strong> What is the consequence/significance?<br><strong>Link:</strong> Brief sentence connecting back to your thesis</p></div></div>
+      <div class="accordion"><div class="acc-head" onclick="toggleAcc(this)">📝 Body Paragraph 2 (5-7 sentences) <span class="chevron">▾</span></div><div class="acc-body"><p>Mirror the structure of Body 1 but with a different main point. For Discussion Essays, this paragraph should present the opposing view. Begin with a strong contrast linker:<br><br><em>"Conversely, those who oppose this viewpoint contend that..."</em><br><em>"On the other hand, proponents of the alternative perspective argue..."</em></p></div></div>
+      <div class="accordion"><div class="acc-head" onclick="toggleAcc(this)">📝 Conclusion (2-3 sentences) <span class="chevron">▾</span></div><div class="acc-body"><p><strong>Never introduce new ideas in the conclusion.</strong><br><br><strong>Sentence 1:</strong> Restate your position (paraphrased, not copied)<br><strong>Sentence 2:</strong> Summarise the key reasons<br><strong>Sentence 3 (optional):</strong> Forward-looking statement or recommendation<br><br><em>"In conclusion, whilst the opposing view has some merit, I maintain that [your position]. The [reason 1] and [reason 2] outlined above suggest that [your stance]. Governments and individuals alike would benefit from [recommendation]."</em></p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ AI TUTOR ═══════════ -->
+<div id="page-tutor" class="page">
+  <div class="info-box"><strong>AI Tutor</strong> — Ask any IELTS question. Get instant expert guidance on writing, speaking, grammar, vocabulary, exam strategy, and more.</div>
+  <div class="card">
+    <div id="tutor-messages" style="min-height:300px;max-height:500px;overflow-y:auto;margin-bottom:16px;display:flex;flex-direction:column;gap:12px">
+      <div class="tutor-msg assistant" style="background:var(--g5);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--g1);line-height:1.7;align-self:flex-start;max-width:90%">
+        👋 Hi! I'm your personal IELTS tutor. Ask me anything — essay structure, grammar rules, vocabulary suggestions, speaking strategies, or how to interpret any IELTS question. What do you need help with today?
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="tutor-input" placeholder="Ask anything about IELTS..." style="flex:1" onkeydown="if(event.key==='Enter')sendTutorMsg()"/>
+      <button class="btn-primary" onclick="sendTutorMsg()">Send →</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <button class="btn-ghost" onclick="quickAsk('How do I structure a Band 8 Task 2 essay?')">Essay structure</button>
+      <button class="btn-ghost" onclick="quickAsk('What vocabulary should I use for environment essays?')">Vocab for topics</button>
+      <button class="btn-ghost" onclick="quickAsk('How can I improve my speaking fluency for Part 3?')">Speaking tips</button>
+      <button class="btn-ghost" onclick="quickAsk('What is the difference between Band 7 and Band 8 writing?')">Band 7 vs 8</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end content -->
+</div><!-- end main -->
+</div><!-- end app -->
+
+<script>
+const GROQ_API = 'https://api.groq.com/openai/v1/chat/completions';
+const GROQ_KEY = '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'; // 
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
+let currentWritingTask = 1;
+let currentPart = 1;
+let currentRwBand = '7';
+let currentPracticeTask = 1;
+let mockTimerInterval = null;
+let practiceTimerInterval = null;
+let mockTimeLeft = 0;
+let practiceTimeLeft = 0;
+let currentMockMinWords = 250;
+let tutorHistory = [];
+
+// ── NAVIGATION ──
+function nav(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  const titles = {home:'Dashboard',writing:'Writing Grader',speaking:'Speaking Coach',mock:'Mock Tests',rewriter:'Essay Rewriter',vocab:'Vocabulary Builder',tips:'Band 8 Strategies',tutor:'AI Tutor'};
+  document.getElementById('topbar-title').textContent = titles[page] || page;
+  const btns = document.querySelectorAll('.sb-item');
+  const idx = ['home','writing','speaking','mock','rewriter','vocab','tips','tutor'];
+  if(idx.indexOf(page)>=0) btns[idx.indexOf(page)].classList.add('active');
+  window.scrollTo(0,0);
+  if(page==='vocab') loadVocab('environment');
+}
+
+async function callClaude(prompt, maxTokens=1500) {
+  const res = await fetch(GROQ_API, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
+    body: JSON.stringify({model:GROQ_MODEL,max_tokens:maxTokens,messages:[{role:'system',content:'You are an expert IELTS examiner and tutor with 15 years experience.'},{role:'user',content:prompt}]})
+  });
+  const d = await res.json();
+  if(d.error) throw new Error(d.error.message);
+  return d.choices[0].message.content;
+}
+
+// ── WRITING ──
+function selectTask(n) {
+  currentWritingTask = n;
+  document.getElementById('w-t1').classList.toggle('sel',n===1);
+  document.getElementById('w-t2').classList.toggle('sel',n===2);
+  document.getElementById('w-target').textContent = n===1?'150':'250';
+}
+function setWritingTab(tab, el) {
+  document.querySelectorAll('.wt-panel').forEach(p=>p.style.display='none');
+  document.querySelectorAll('.page-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('wt-'+tab).style.display='block';
+  el.classList.add('active');
+}
+function updateWWC() {
+  const t = document.getElementById('w-essay').value.trim();
+  const wc = t?t.split(/\s+/).length:0;
+  document.getElementById('w-wc').textContent = wc;
+  const min = currentWritingTask===1?150:250;
+  document.getElementById('w-wc-bar').style.width = Math.min(100,wc/min*100)+'%';
+}
+function clearWriting() {
+  document.getElementById('w-essay').value='';
+  document.getElementById('w-wc').textContent='0';
+  document.getElementById('w-wc-bar').style.width='0%';
+  document.getElementById('w-result').classList.remove('show');
+}
+async function genWritingTopic() {
+  const load = document.getElementById('w-topic-load');
+  load.classList.add('show');
+  const taskDesc = currentWritingTask===1?'Task 1 (a specific chart type: bar chart, line graph, pie chart, table, map, or process diagram — pick one and describe it as it would appear in a real exam)':'Task 2 (choose one type: agree/disagree opinion essay, discuss both views, problem and solution, or advantages and disadvantages)';
+  try {
+    const q = await callClaude(`Generate one authentic IELTS Academic Writing ${taskDesc} question exactly as it appears in real exams. Include all necessary instructions. Return only the question text, nothing else.`);
+    document.getElementById('w-topic').value = q.trim();
+    const hint = document.getElementById('w-topic-type');
+    hint.style.display='block';
+    hint.textContent = currentWritingTask===1?'📊 Task 1: Focus on selecting key features, making comparisons, and writing an Overview paragraph. Do NOT include your opinion.':'📝 Task 2: Fully address every part of the question. Plan your structure before writing. Aim for 270-290 words.';
+  } catch(e) { alert('Could not generate. Please paste your own question.'); }
+  load.classList.remove('show');
+}
+async function gradeWriting() {
+  const topic = document.getElementById('w-topic').value.trim();
+  const essay = document.getElementById('w-essay').value.trim();
+  if(!essay){alert('Please write your response first.');return;}
+  if(!topic){alert('Please enter a question first.');return;}
+  const result = document.getElementById('w-result');
+  const loading = document.getElementById('w-loading');
+  const content = document.getElementById('w-score-content');
+  result.classList.add('show');
+  loading.classList.add('show');
+  content.style.display='none';
+  const prompt = `You are a senior IELTS examiner with 15+ years experience. Grade this IELTS Writing ${currentWritingTask===1?'Task 1':'Task 2'} response using the official IELTS band descriptors strictly.
+
+Question: ${topic}
+Response: ${essay}
+
+Return ONLY valid JSON, no markdown, no explanation:
+{"tr":6.5,"cc":6.0,"lr":7.0,"gr":6.5,"overall":6.5,
+"tr_fb":"2-3 sentences on task response — what they did well and what's missing",
+"cc_fb":"2-3 sentences on coherence and cohesion — paragraph structure, linkers, referencing",
+"lr_fb":"2-3 sentences on vocabulary — range, accuracy, collocations, repetition",
+"gr_fb":"2-3 sentences on grammar — sentence variety, errors, punctuation",
+"band8_steps":["specific action 1 referencing their actual text","specific action 2","specific action 3"],
+"key_errors":["quote an actual error from their essay and explain how to fix it","another error with fix","another error with fix"]}`;
+  try {
+    const raw = await callClaude(prompt);
+    const d = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    loading.classList.remove('show');
+    content.style.display='block';
+    document.getElementById('w-overall-num').textContent = d.overall;
+    const scores = {tr:d.tr,cc:d.cc,lr:d.lr,gr:d.gr};
+    for(const[k,v] of Object.entries(scores)){
+      document.getElementById('w-s-'+k).textContent=v;
+      document.getElementById('w-b-'+k).style.width=(v/9*100)+'%';
+    }
+    document.getElementById('w-feedback-content').innerHTML = `
+      <div class="feedback-item"><h4>Task Response <span class="score-tag">${d.tr}</span></h4><p>${d.tr_fb}</p></div>
+      <div class="feedback-item"><h4>Coherence & Cohesion <span class="score-tag">${d.cc}</span></h4><p>${d.cc_fb}</p></div>
+      <div class="feedback-item"><h4>Lexical Resource <span class="score-tag">${d.lr}</span></h4><p>${d.lr_fb}</p></div>
+      <div class="feedback-item"><h4>Grammatical Range & Accuracy <span class="score-tag">${d.gr}</span></h4><p>${d.gr_fb}</p></div>`;
+    document.getElementById('w-band8-content').innerHTML = `<div class="band8-box"><h4>🎯 Your Path to Band 8</h4><ul>${d.band8_steps.map(s=>`<li>${s}</li>`).join('')}</ul></div>`;
+    document.getElementById('w-errors-content').innerHTML = `<div class="band8-box"><h4>⚠️ Key Errors to Fix</h4><ul>${d.key_errors.map(s=>`<li>${s}</li>`).join('')}</ul></div>`;
+    content.scrollIntoView({behavior:'smooth',block:'start'});
+  } catch(e) {
+    loading.classList.remove('show');
+    content.style.display='block';
+    document.getElementById('w-feedback-content').innerHTML='<p style="color:var(--red)">Could not grade. Please try again.</p>';
+  }
+}
+async function getWritingSample() {
+  const topic = document.getElementById('w-topic').value.trim();
+  if(!topic){alert('Generate or paste a topic first.');return;}
+  const w = window.open('','_blank');
+  w.document.write(`<html><head><title>Band 8 Sample</title><style>body{font-family:-apple-system,sans-serif;max-width:750px;margin:2rem auto;padding:1rem;line-height:1.8;color:#0d1f18}h2{color:#1a6b4a;margin-bottom:16px}h3{color:#1a6b4a;margin:20px 0 8px}.essay{background:#f4f7f6;border-left:4px solid #28a372;padding:16px 20px;border-radius:0 10px 10px 0;white-space:pre-wrap}.commentary{background:#fff;border:1px solid #e2ece8;border-radius:10px;padding:16px;margin-top:20px}</style></head><body><h2>Band 8 Sample Answer</h2><div class="essay" id="out">Loading...</div><div class="commentary" id="c"></div></body></html>`);
+  try {
+    const r = await callClaude(`Write a Band 8 IELTS ${currentWritingTask===1?'Task 1 response (170-190 words)':'Task 2 essay (275-290 words)'} for this question:\n\n${topic}\n\nThen below write "=== EXAMINER COMMENTARY ===" and explain in 5 bullet points exactly what makes this response Band 8.`,2000);
+    const [essay,...rest]=r.split('=== EXAMINER COMMENTARY ===');
+    w.document.getElementById('out').textContent=essay.trim();
+    if(rest.length) w.document.getElementById('c').innerHTML='<h3>Examiner Commentary</h3><p style="white-space:pre-wrap">'+rest.join('').trim()+'</p>';
+  } catch(e){w.document.getElementById('out').textContent='Error. Please try again.';}
+}
+async function analyseTask() {
+  const topic = document.getElementById('w-topic').value.trim();
+  if(!topic){alert('Enter a question first.');return;}
+  const w = window.open('','_blank');
+  w.document.write(`<html><head><title>Task Analysis</title><style>body{font-family:-apple-system,sans-serif;max-width:750px;margin:2rem auto;padding:1rem;line-height:1.8;color:#0d1f18}h2{color:#1a6b4a}pre{white-space:pre-wrap}</style></head><body><h2>Question Analysis</h2><pre id="out">Loading...</pre></body></html>`);
+  try {
+    const r = await callClaude(`Act as an IELTS expert and analyse this writing question for a student:\n\n${topic}\n\nProvide:\n1. ESSAY TYPE: What type of essay/task this is\n2. KEY REQUIREMENTS: What exactly the question is asking (every part)\n3. KEYWORDS TO ADDRESS: The specific concepts that must be covered\n4. COMMON MISTAKES: What students typically get wrong with this type\n5. RECOMMENDED STRUCTURE: A paragraph-by-paragraph outline for Band 8\n6. USEFUL VOCABULARY: 8-10 topic-specific words/phrases with meaning`);
+    w.document.getElementById('out').textContent=r;
+  } catch(e){w.document.getElementById('out').textContent='Error. Please try again.';}
+}
+function setFbTab(prefix,tab,el){
+  document.querySelectorAll(`#${prefix}-fb-${['detail','band8','errors'].join(', #'+prefix+'-fb-')}`).forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.fb-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(`${prefix}-fb-${tab}`).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── PRACTICE MODE ──
+function selectPracticeTask(n){
+  currentPracticeTask=n;
+  document.getElementById('p-t1').classList.toggle('sel',n===1);
+  document.getElementById('p-t2').classList.toggle('sel',n===2);
+}
+async function startPractice() {
+  const mins = currentPracticeTask===1?20:40;
+  document.getElementById('practice-active').style.display='block';
+  document.getElementById('practice-type-label').textContent=`IELTS Writing Task ${currentPracticeTask}`;
+  const q = await callClaude(`Generate one authentic IELTS Writing Task ${currentPracticeTask} question. Return only the question text.`);
+  document.getElementById('practice-question-text').textContent=q.trim();
+  practiceTimeLeft=mins*60;
+  updatePracticeTimer();
+  practiceTimerInterval=setInterval(()=>{
+    practiceTimeLeft--;
+    updatePracticeTimer();
+    if(practiceTimeLeft<=0){clearInterval(practiceTimerInterval);submitPractice();}
+  },1000);
+}
+function updatePracticeTimer(){
+  const m=Math.floor(practiceTimeLeft/60),s=practiceTimeLeft%60;
+  const el=document.getElementById('practice-timer');
+  el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className='timer'+(practiceTimeLeft<=300?' warning':'')+(practiceTimeLeft<=60?' danger':'');
+}
+function updatePracticeWC(){const t=document.getElementById('practice-essay').value.trim();document.getElementById('p-wc').textContent=t?t.split(/\s+/).length:0;}
+async function submitPractice(){
+  clearInterval(practiceTimerInterval);
+  const essay=document.getElementById('practice-essay').value.trim();
+  const topic=document.getElementById('practice-question-text').textContent;
+  if(!essay){alert('Please write something first.');return;}
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Practice Results</title><style>body{font-family:-apple-system,sans-serif;max-width:750px;margin:2rem auto;padding:1rem;line-height:1.8;color:#0d1f18}h2{color:#1a6b4a}pre{white-space:pre-wrap}</style></head><body><h2>Practice Results</h2><pre id="out">Grading...</pre></body></html>`);
+  try {
+    const r=await callClaude(`Grade this IELTS Writing Task ${currentPracticeTask} response. Question: ${topic}\nResponse: ${essay}\n\nGive: Overall band, each criterion score, 3-sentence overall feedback, 3 specific improvements.`);
+    w.document.getElementById('out').textContent=r;
+  } catch(e){w.document.getElementById('out').textContent='Error.';}
+}
+function endPractice(){clearInterval(practiceTimerInterval);document.getElementById('practice-active').style.display='none';}
+
+// ── SAMPLES ──
+async function loadSample(type) {
+  document.getElementById('sample-loading').classList.add('show');
+  document.getElementById('sample-content').style.display='none';
+  const types={
+    opinion:'IELTS Writing Task 2 — Opinion/Agree-Disagree essay about the impact of social media on society',
+    problem:'IELTS Writing Task 2 — Problem/Solution essay about the causes and solutions to youth unemployment',
+    adv:'IELTS Writing Task 2 — Advantages and Disadvantages essay about working from home',
+    barchart:'IELTS Writing Task 1 — Bar chart showing sales of three types of products in four countries in 2020',
+    linegraph:'IELTS Writing Task 1 — Line graph showing changes in average temperatures in three cities from 1990 to 2020',
+    process:'IELTS Writing Task 1 — Process diagram showing how solar panels generate electricity'
+  };
+  try {
+    const r=await callClaude(`Generate a complete IELTS question AND a Band 8 model answer for: ${types[type]}. Format: First write the exact exam question, then "=== BAND 8 ANSWER ===" then the model answer, then "=== EXAMINER NOTES ===" then 5 bullet points explaining what makes it Band 8.`,2000);
+    const parts=r.split(/===.*===/);
+    document.getElementById('sample-question').textContent=parts[0]?.trim()||'';
+    document.getElementById('sample-text').textContent=parts[1]?.trim()||'';
+    document.getElementById('sample-commentary').innerHTML=(parts[2]?.trim()||'').replace(/\n/g,'<br>');
+    document.getElementById('sample-content').style.display='block';
+  } catch(e){alert('Error loading sample.');}
+  document.getElementById('sample-loading').classList.remove('show');
+}
+
+// ── SPEAKING ──
+function selectPart(n,el){
+  currentPart=n;
+  document.querySelectorAll('.part-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  const descs={1:'Part 1 — The examiner asks personal questions about familiar topics: home, family, studies, work, and hobbies. Give natural, extended answers of 3-4 sentences. Avoid one-word responses.',2:'Part 2 — You receive a cue card with a topic and 3-4 bullet points. You have 1 minute to prepare, then speak for 1-2 minutes without interruption. Cover all bullet points and describe how you feel about the topic.',3:'Part 3 — An extended academic discussion linked to the Part 2 topic. Speak analytically: give opinions, compare perspectives, speculate about the future, and discuss societal implications. Extended, nuanced responses are expected.'};
+  document.getElementById('sp-desc').textContent=descs[n];
+  document.getElementById('sp-result').classList.remove('show');
+}
+function updateSPWC(){const t=document.getElementById('sp-answer').value.trim();document.getElementById('sp-wc').textContent=t?t.split(/\s+/).length:0;}
+async function genSpeakingQ(){
+  const el=document.getElementById('sp-question');
+  const load=document.getElementById('sp-q-loading');
+  el.style.display='none';
+  load.classList.add('show');
+  const desc={1:'three related IELTS Speaking Part 1 questions on one topic (could be: travel, music, food, sport, technology, childhood memories, or work). Format: Q1: ...\nQ2: ...\nQ3: ...',2:'a complete IELTS Speaking Part 2 cue card. Include a topic sentence, then "You should say:" with 4 bullet points, ending with "...and explain how this [topic] makes you feel." Make it realistic.',3:'two IELTS Speaking Part 3 discussion questions on a societal topic (education, technology, environment, health, globalisation, or culture). Make them abstract and thought-provoking.'};
+  try{
+    const q=await callClaude(`Generate ${desc[currentPart]}. Return only the question text, no preamble.`);
+    el.innerHTML='<p style="white-space:pre-wrap">'+q.trim()+'</p>';
+  } catch(e){el.innerHTML='<p>Error generating. Please try again.</p>';}
+  load.classList.remove('show');
+  el.style.display='block';
+}
+async function gradeSpeaking(){
+  const q=document.getElementById('sp-question').innerText.trim();
+  const a=document.getElementById('sp-answer').value.trim();
+  if(!a){alert('Write your answer first.');return;}
+  if(q.includes('Click "New Question"')){alert('Generate a question first.');return;}
+  const result=document.getElementById('sp-result');
+  const loading=document.getElementById('sp-loading');
+  const content=document.getElementById('sp-score-content');
+  result.classList.add('show');
+  loading.classList.add('show');
+  content.style.display='none';
+  const prompt=`You are a senior IELTS Speaking examiner. The candidate typed their spoken response to a Part ${currentPart} question.
+Question: ${q}
+Response: ${a}
+Grade using all 4 official IELTS Speaking criteria. Return ONLY valid JSON:
+{"fc":7.0,"lr":7.0,"gr":6.5,"pr":7.0,"overall":7.0,
+"fc_fb":"2 sentences on fluency and coherence with specific observations",
+"lr_fb":"2 sentences on vocabulary range and use",
+"gr_fb":"2 sentences on grammar variety and accuracy",
+"pr_fb":"2 sentences on pronunciation patterns inferred from their language choices",
+"band8_steps":["specific actionable improvement 1","specific improvement 2","specific improvement 3"]}`;
+  try{
+    const raw=await callClaude(prompt);
+    const d=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    loading.classList.remove('show');
+    content.style.display='block';
+    document.getElementById('sp-overall-num').textContent=d.overall;
+    const sc={fc:d.fc,lr:d.lr,gr:d.gr,pr:d.pr};
+    for(const[k,v] of Object.entries(sc)){document.getElementById('sp-s-'+k).textContent=v;document.getElementById('sp-b-'+k).style.width=(v/9*100)+'%';}
+    document.getElementById('sp-feedback-content').innerHTML=`
+      <div class="feedback-item"><h4>Fluency & Coherence <span class="score-tag">${d.fc}</span></h4><p>${d.fc_fb}</p></div>
+      <div class="feedback-item"><h4>Lexical Resource <span class="score-tag">${d.lr}</span></h4><p>${d.lr_fb}</p></div>
+      <div class="feedback-item"><h4>Grammatical Range <span class="score-tag">${d.gr}</span></h4><p>${d.gr_fb}</p></div>
+      <div class="feedback-item"><h4>Pronunciation <span class="score-tag">${d.pr}</span></h4><p>${d.pr_fb}</p></div>`;
+    document.getElementById('sp-band8-content').innerHTML=`<div class="band8-box"><h4>🎯 Your Path to Band 8 Speaking</h4><ul>${d.band8_steps.map(s=>`<li>${s}</li>`).join('')}</ul></div>`;
+    content.scrollIntoView({behavior:'smooth',block:'start'});
+  } catch(e){loading.classList.remove('show');content.style.display='block';document.getElementById('sp-feedback-content').innerHTML='<p style="color:var(--red)">Could not grade. Try again.</p>';}
+}
+async function getSpeakingSample(){
+  const q=document.getElementById('sp-question').innerText.trim();
+  if(q.includes('Click "New Question"')){alert('Generate a question first.');return;}
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Band 8 Speaking Sample</title><style>body{font-family:-apple-system,sans-serif;max-width:750px;margin:2rem auto;padding:1rem;line-height:1.8;color:#0d1f18}h2{color:#1a6b4a}pre{white-space:pre-wrap}</style></head><body><h2>Band 8 Speaking Sample — Part ${currentPart}</h2><pre id="out">Loading...</pre></body></html>`);
+  try{const r=await callClaude(`Write a Band 8 IELTS Speaking Part ${currentPart} answer for this question:\n\n${q}\n\nWrite it as natural speech (use contractions, natural connectors). After the answer write "=== WHY THIS IS BAND 8 ===" and list 5 specific features.`);w.document.getElementById('out').textContent=r;}catch(e){w.document.getElementById('out').textContent='Error.';}
+}
+async function getSpeakingTips(){
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Part ${currentPart} Tips</title><style>body{font-family:-apple-system,sans-serif;max-width:750px;margin:2rem auto;padding:1rem;line-height:1.8;color:#0d1f18}h2{color:#1a6b4a}pre{white-space:pre-wrap}</style></head><body><h2>IELTS Speaking Part ${currentPart} — Band 8 Tips</h2><pre id="out">Loading...</pre></body></html>`);
+  try{const r=await callClaude(`Give 8 specific Band 8 tips for IELTS Speaking Part ${currentPart}. Include example phrases and sentences the student can use. Be practical and specific.`);w.document.getElementById('out').textContent=r;}catch(e){w.document.getElementById('out').textContent='Error.';}
+}
+
+// ── MOCK TESTS ──
+function startMock(type,question,taskType,meta){
+  document.getElementById('mock-browse').style.display='none';
+  document.getElementById('mock-exam').style.display='block';
+  document.getElementById('mock-type-label').textContent=type;
+  document.getElementById('mock-q-preview').textContent=question.substring(0,80)+'...';
+  document.getElementById('mock-question-full').textContent=question;
+  document.getElementById('mock-essay').value='';
+  document.getElementById('mock-result').classList.remove('show');
+  const mins=taskType==='t1'?20:40;
+  const minWords=taskType==='t1'?150:250;
+  currentMockMinWords=minWords;
+  document.getElementById('mock-min').textContent=minWords;
+  document.getElementById('mock-wc').textContent='0';
+  document.getElementById('mock-wc-bar').style.width='0%';
+  mockTimeLeft=mins*60;
+  updateMockTimer();
+  mockTimerInterval=setInterval(()=>{mockTimeLeft--;updateMockTimer();if(mockTimeLeft<=0){clearInterval(mockTimerInterval);submitMock();}},1000);
+  window.scrollTo(0,0);
+}
+function updateMockTimer(){
+  const m=Math.floor(mockTimeLeft/60),s=mockTimeLeft%60;
+  const el=document.getElementById('mock-timer');
+  el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className='timer'+(mockTimeLeft<=300?' warning':'')+(mockTimeLeft<=60?' danger':'');
+}
+function updateMockWC(){
+  const t=document.getElementById('mock-essay').value.trim();
+  const wc=t?t.split(/\s+/).length:0;
+  document.getElementById('mock-wc').textContent=wc;
+  document.getElementById('mock-wc-bar').style.width=Math.min(100,wc/currentMockMinWords*100)+'%';
+}
+function exitMock(){clearInterval(mockTimerInterval);document.getElementById('mock-browse').style.display='block';document.getElementById('mock-exam').style.display='none';}
+async function submitMock(){
+  clearInterval(mockTimerInterval);
+  const essay=document.getElementById('mock-essay').value.trim();
+  const question=document.getElementById('mock-question-full').textContent;
+  if(!essay){alert('Please write your response first.');return;}
+  const result=document.getElementById('mock-result');
+  const loading=document.getElementById('mock-loading');
+  const content=document.getElementById('mock-score-content');
+  result.classList.add('show');
+  loading.classList.add('show');
+  content.style.display='none';
+  const prompt=`You are a senior IELTS examiner. Grade this mock exam response strictly.
+Question: ${question}
+Response: ${essay}
+Return ONLY valid JSON:
+{"tr":6.5,"cc":6.5,"lr":7.0,"gr":6.5,"overall":6.5,
+"summary":"3-4 sentences: specific praise and the main weakness with reference to their actual writing",
+"band8_steps":["specific action 1","specific action 2","specific action 3"]}`;
+  try{
+    const raw=await callClaude(prompt);
+    const d=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    loading.classList.remove('show');
+    content.style.display='block';
+    document.getElementById('mock-overall-num').textContent=d.overall;
+    const sc={tr:d.tr,cc:d.cc,lr:d.lr,gr:d.gr};
+    for(const[k,v] of Object.entries(sc)){document.getElementById('mock-s-'+k).textContent=v;document.getElementById('mock-b-'+k).style.width=(v/9*100)+'%';}
+    document.getElementById('mock-feedback-content').innerHTML=`<div class="feedback-item"><h4>Exam Assessment</h4><p>${d.summary}</p></div>`;
+    document.getElementById('mock-band8-content').innerHTML=`<div class="band8-box" style="margin-top:16px"><h4>🎯 Before Your Real Exam</h4><ul>${d.band8_steps.map(s=>`<li>${s}</li>`).join('')}</ul></div>`;
+    content.scrollIntoView({behavior:'smooth',block:'start'});
+  } catch(e){loading.classList.remove('show');content.style.display='block';document.getElementById('mock-feedback-content').innerHTML='<p style="color:var(--red)">Error. Please try again.</p>';}
+}
+
+// ── ESSAY REWRITER ──
+function setRwBand(b,el){currentRwBand=b;document.querySelectorAll('#rw-b7,#rw-b8,#rw-b9').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');document.getElementById('rw-band-label').textContent=b;}
+async function rewriteEssay(){
+  const text=document.getElementById('rw-input').value.trim();
+  if(!text){alert('Paste your essay first.');return;}
+  document.getElementById('rw-loading').classList.add('show');
+  document.getElementById('rw-result').style.display='none';
+  try{
+    const r=await callClaude(`You are an expert IELTS writing coach. Rewrite this essay to Band ${currentRwBand} level. Keep all the writer's ideas and argument but significantly improve vocabulary range, grammatical complexity, coherence, and lexical precision.
+
+Original essay: ${text}
+
+Return ONLY valid JSON:
+{"rewritten":"the full rewritten essay text","changes":"5-6 bullet points explaining what you changed and why each change improves the band score"}`,2000);
+    const d=JSON.parse(r.replace(/```json|```/g,'').trim());
+    document.getElementById('rw-orig-text').textContent=text;
+    document.getElementById('rw-new-text').textContent=d.rewritten;
+    document.getElementById('rw-changes').innerHTML=d.changes.split('\n').filter(l=>l.trim()).map(l=>`<p style="margin-bottom:8px">• ${l.replace(/^[•\-*]\s*/,'')}</p>`).join('');
+    document.getElementById('rw-result').style.display='block';
+  } catch(e){alert('Error rewriting. Please try again.');}
+  document.getElementById('rw-loading').classList.remove('show');
+}
+
+// ── VOCABULARY BUILDER ──
+const vocabSets = {
+  environment:['deteriorate','mitigation','sustainability','deforestation','biodiversity','emissions','renewable','ecosystem','contamination','conservation'],
+  technology:['innovation','algorithm','automation','disruptive','cybersecurity','artificial intelligence','bandwidth','proliferation','obsolete','infrastructure'],
+  society:['demographics','inequality','urbanisation','marginalised','cohesion','governance','disparity','inclusivity','polarisation','assimilation'],
+  education:['curriculum','pedagogy','literacy','autonomy','critical thinking','vocational','tuition','attainment','holistic','standardised'],
+  health:['preventable','sedentary','cardiovascular','malnutrition','epidemic','pharmaceutical','wellbeing','rehabilitation','chronic','mental health']
+};
+async function loadVocab(cat){
+  document.getElementById('vocab-load').classList.add('show');
+  document.getElementById('vocab-grid').innerHTML='';
+  document.getElementById('vocab-detail').style.display='none';
+  const words=vocabSets[cat]||[];
+  document.getElementById('vocab-load').classList.remove('show');
+  document.getElementById('vocab-grid').innerHTML=words.map(w=>`<div class="vocab-card" onclick="showVocabDetail('${w}','${cat}')"><div class="word">${w}</div><div class="type">Academic</div><div class="def">Click for examples</div></div>`).join('');
+}
+function setVocabCat(cat,el){document.querySelectorAll('.page-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');loadVocab(cat);}
+async function showVocabDetail(word,topic){
+  document.getElementById('vd-word').textContent=word;
+  document.getElementById('vd-content').textContent='Loading...';
+  document.getElementById('vocab-detail').style.display='block';
+  try{
+    const r=await callClaude(`For the word "${word}" in IELTS ${topic} context: give 1. Definition (1 sentence), 2. Part of speech, 3. Two IELTS-level example sentences using this word, 4. Three collocations (word partnerships), 5. A synonym and antonym. Format clearly.`);
+    document.getElementById('vd-content').innerHTML=r.replace(/\n/g,'<br>');
+  } catch(e){document.getElementById('vd-content').textContent='Error loading details.';}
+}
+
+// ── TIPS ──
+function setTipsTab(tab,el){
+  ['writing','speaking','structure'].forEach(t=>document.getElementById('tips-'+t).style.display='none');
+  document.querySelectorAll('.page-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tips-'+tab).style.display='block';
+  el.classList.add('active');
+}
+function toggleAcc(head){const body=head.nextElementSibling;const ch=head.querySelector('.chevron');body.classList.toggle('open');ch.classList.toggle('open');}
+
+// ── AI TUTOR ──
+async function sendTutorMsg(){
+  const input=document.getElementById('tutor-input');
+  const msg=input.value.trim();
+  if(!msg)return;
+  addTutorMsg(msg,'user');
+  input.value='';
+  tutorHistory.push({role:'user',content:msg});
+  const typing=addTutorMsg('Thinking...','assistant',true);
+  try{
+    const msgs=[{role:'system',content:'You are an expert IELTS tutor with 15 years experience. You help students reach Band 8. Give specific, actionable advice with examples. Keep responses focused and practical.'},...tutorHistory];
+    const res=await fetch(GROQ_API,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},body:JSON.stringify({model:GROQ_MODEL,max_tokens:1000,messages:msgs})});
+    const d=await res.json();
+    const reply=d.choices[0].message.content;
+    typing.textContent=reply;
+    tutorHistory.push({role:'assistant',content:reply});
+  } catch(e){typing.textContent='Error. Please try again.';}
+}
+function addTutorMsg(text,role,isTyping=false){
+  const div=document.createElement('div');
+  div.textContent=text;
+  div.style.cssText=`border-radius:12px;padding:12px 16px;font-size:14px;line-height:1.7;max-width:90%;${role==='user'?'background:var(--g2);color:#fff;align-self:flex-end;margin-left:auto':'background:var(--g5);color:var(--g1);align-self:flex-start'}`;
+  const msgs=document.getElementById('tutor-messages');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+function quickAsk(q){document.getElementById('tutor-input').value=q;sendTutorMsg();}
+</script>
+</body>
+</html>
