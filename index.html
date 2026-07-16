@@ -829,15 +829,35 @@ function nav(page) {
   if(page==='vocab') loadVocab('environment');
 }
 
-async function callClaude(prompt, maxTokens=1500) {
-  const res = await fetch(GROQ_API, {
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
-    body: JSON.stringify({model:GROQ_MODEL,max_tokens:maxTokens,messages:[{role:'system',content:'You are an expert IELTS examiner and tutor with 15 years experience.'},{role:'user',content:prompt}]})
+async function callClaude(prompt, maxTokens=1500, type='general') {
+  const res = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      type: type,
+      messages: [{role:'user', content: prompt}],
+      max_tokens: maxTokens
+    })
   });
   const d = await res.json();
   if(d.error) throw new Error(d.error.message);
   return d.choices[0].message.content;
+}
+
+async function callClaudeJSON(prompt, type='general') {
+  const res = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      type: type,
+      messages: [{role:'user', content: prompt}],
+      max_tokens: 1500,
+      json_mode: true
+    })
+  });
+  const d = await res.json();
+  if(d.error) throw new Error(d.error.message);
+  return JSON.parse(d.choices[0].message.content);
 }
 
 // ── WRITING ──
